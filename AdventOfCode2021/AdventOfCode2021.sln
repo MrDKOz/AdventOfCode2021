@@ -1,16 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayOnePartOne", "DayOnePartOne\DayOnePartOne.csproj", "{B7922833-AF08-40DD-A3FB-1CFD2407ECAB}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayOnePartOne", "DayOnePartOne\DayOnePartOne.csproj", "{B7922833-AF08-40DD-A3FB-1CFD2407ECAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayOnePartTwo", "DayOnePartTwo\DayOnePartTwo.csproj", "{70161E8F-E8BA-47A2-9FA4-BF57385C0871}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayOnePartTwo", "DayOnePartTwo\DayOnePartTwo.csproj", "{70161E8F-E8BA-47A2-9FA4-BF57385C0871}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayTwoPartOne", "DayTwoPartOne\DayTwoPartOne.csproj", "{F3D6F114-D9CE-41BE-BE89-A3C9DDC52849}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayTwoPartOne", "DayTwoPartOne\DayTwoPartOne.csproj", "{F3D6F114-D9CE-41BE-BE89-A3C9DDC52849}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayTwoPartTwo", "DayTwoPartTwo\DayTwoPartTwo.csproj", "{E0DDC1F2-3CBB-454F-B842-EEA38070FF63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayTwoPartTwo", "DayTwoPartTwo\DayTwoPartTwo.csproj", "{E0DDC1F2-3CBB-454F-B842-EEA38070FF63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayThreePartOne", "DayThreePartOne\DayThreePartOne.csproj", "{6CF41970-61D9-4362-8C2D-2DDD73D12F68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayThreePartOne", "DayThreePartOne\DayThreePartOne.csproj", "{6CF41970-61D9-4362-8C2D-2DDD73D12F68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayThreePartTwo", "DayThreePartTwo\DayThreePartTwo.csproj", "{1F39A9D4-23E2-47C9-BD7A-E459FDB916B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayThreePartTwo", "DayThreePartTwo\DayThreePartTwo.csproj", "{1F39A9D4-23E2-47C9-BD7A-E459FDB916B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DayFourPartOne", "DayFourPartOne\DayFourPartOne.csproj", "{72AEDE3E-D257-470B-BBB9-DC1A808963A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +47,15 @@ Global
 		{1F39A9D4-23E2-47C9-BD7A-E459FDB916B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F39A9D4-23E2-47C9-BD7A-E459FDB916B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F39A9D4-23E2-47C9-BD7A-E459FDB916B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72AEDE3E-D257-470B-BBB9-DC1A808963A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AEDE3E-D257-470B-BBB9-DC1A808963A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AEDE3E-D257-470B-BBB9-DC1A808963A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AEDE3E-D257-470B-BBB9-DC1A808963A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {949A7A15-399A-44A2-8552-7580F2C0F1F5}
 	EndGlobalSection
 EndGlobal
