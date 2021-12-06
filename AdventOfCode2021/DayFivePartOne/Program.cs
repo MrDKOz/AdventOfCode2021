@@ -91,9 +91,13 @@ namespace DayFivePartOne
 
             var converted = ConvertRawInput(input);
 
-            MapVents(converted);
+            var map = MapVents(converted);
 
-            Console.WriteLine($"Game Over! Thank you for playing.");
+            var overlaps = CountOverlaps(map);
+
+            //DrawMap(map);
+
+            Console.WriteLine($"There are {overlaps} places where >=2 vent lines overlap!");
         }
 
         private static List<Vent> ConvertRawInput(IEnumerable<string> input)
@@ -148,10 +152,9 @@ namespace DayFivePartOne
             }
         }
 
-        private static void MapVents(List<Vent> ventStartAndEnds)
+        private static int[,] MapVents(List<Vent> ventStartAndEnds)
         {
             var map = new int[Rows, Columns];
-            var overlaps = 0;
 
             foreach (var ventLine in ventStartAndEnds)
             {
@@ -165,6 +168,13 @@ namespace DayFivePartOne
                     }
                 }
             }
+
+            return map;
+        }
+
+        private static int CountOverlaps(int[,] map)
+        {
+            var overlaps = 0;
 
             for (int x = 0; x < map.GetLength(0); x++)
             {
@@ -180,8 +190,11 @@ namespace DayFivePartOne
                 }
             }
 
+            return overlaps;
+        }
 
-
+        private static void DrawMap(int[,] map)
+        {
             var mapper = new StringBuilder();
 
             for (int x = 0; x < map.GetLength(0); x++)
@@ -197,21 +210,6 @@ namespace DayFivePartOne
             }
 
             File.WriteAllText(@"C:\\test\test.txt", mapper.ToString());
-
-            //for (int x = 0; x < 1000; x++)
-            //{
-            //    for (int y = 0; y < 1000; y++)
-            //    {
-            //        var currentValue = map[x, y];
-
-            //        if (currentValue > 1)
-            //        {
-            //            overlaps++;
-            //        }
-            //    }
-            //}
-
-            Console.WriteLine(overlaps);
         }
     }
 }
