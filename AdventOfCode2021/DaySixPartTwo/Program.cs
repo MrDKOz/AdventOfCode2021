@@ -1,81 +1,60 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace DaySixPartTwo
 {
-    public class FishRecord
-    {
-        public int Id { get; set; }
-        public int Age { get; set; }
-
-        public long Count { get; set; }
-    }
-
     public class FishCensus
     {
-        private const int maxAge = 8;
+        private long[] Ages { get; } = new long[9];
+        private const int MaxAge = 8;
 
-        public Stack<FishRecord> FishAges { get; set; } = new Stack<FishRecord>();
-
-        public FishCensus(IEnumerable<int> initialBatch)
+        public FishCensus(IEnumerable<long> initialBatch)
         {
-            for (int i = 0; i <= maxAge; i++)
+            foreach (var age in initialBatch)
             {
-                FishAges.Push(new FishRecord
-                {
-                    Id = i,
-                    Age = i,
-                    Count = 0
-                });
-            }
-
-            foreach (var fish in initialBatch)
-            {
-                AddFish(fish);
+                Ages[age]++;
             }
         }
 
-        public void AddFish(int currentTimer)
+        public long SimulateNumberOfDays(int daysToSimulate)
         {
-            FishAges.Single(fa => fa.Age == currentTimer).Count++;
-        }
-
-        public void AdvancedDay()
-        {
-            for (int groupId = 0; groupId < FishAges.Count; groupId++)
+            for (var day = 0; day < daysToSimulate; day++)
             {
-                var fishAgeGroup = FishAges.Single(fa => fa.Id == groupId);
+                var lastAge = Ages[0];
 
-                switch (fishAgeGroup.Age)
+                for (var ageFocus = 0; ageFocus < MaxAge; ageFocus++)
                 {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    default:
-                        break;
+                    Ages[ageFocus] = Ages[ageFocus + 1];
                 }
+
+                Ages[6] += lastAge;
+                Ages[8] = lastAge;
             }
+
+            return Ages.Sum();
         }
     }
 
     public static class Program
     {
+        private const int DaysToSimulate = 18;
+
         public static void Main()
         {
             var inputs = File.ReadAllLines("input.txt");
             var splitInput = inputs.First().Split(',');
-            var convertedInput = (from item in splitInput select Convert.ToInt32(item)).ToList();
+            var convertedInput = (from item in splitInput select Convert.ToInt64(item)).ToList();
 
+            var fishCensus = new FishCensus(convertedInput);
 
+            Console.WriteLine("Calculating...");
+
+            var result = fishCensus.SimulateNumberOfDays(256);
            
-            Console.WriteLine($"After day(s):");
+            Console.WriteLine($"After {DaysToSimulate} day(s): {result}");
         }
     }
 }

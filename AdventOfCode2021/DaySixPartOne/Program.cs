@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 
 namespace DaySixPartOne
 {
@@ -12,11 +11,11 @@ namespace DaySixPartOne
 
     public class Family
     {
-        public HashSet<LanternFish> Fishes { get; set; } = new HashSet<LanternFish>();
+        private HashSet<LanternFish> Fishes { get; } = new();
 
-        public Family(IEnumerable<int> intialBatch)
+        public Family(IEnumerable<int> initialBatch)
         {
-            foreach (var fish in intialBatch)
+            foreach (var fish in initialBatch)
             {
                 Fishes.Add(new LanternFish(fish));
             }
