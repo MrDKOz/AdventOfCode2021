@@ -1,4 +1,7 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Numerics;
 using System.Text;
 
 namespace DayFivePartOne
@@ -72,8 +75,6 @@ namespace DayFivePartOne
                     break;
                 case Direction.Diagonal:
                     throw new NotImplementedException();
-                default:
-                    break;
             }
 
             return path;

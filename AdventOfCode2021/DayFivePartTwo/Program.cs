@@ -1,4 +1,7 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Numerics;
 using System.Text;
 
 namespace DayFivePartTwo
@@ -12,8 +15,8 @@ namespace DayFivePartTwo
 
     public class Vent
     {
-        public Vector2 Start { get; set; }
-        public Vector2 End { get; set; }
+        public Vector2 Start { get; init; }
+        public Vector2 End { get; init; }
         public Direction Direction { get; set; }
 
         public List<Vector2> CalculatePath()
@@ -91,8 +94,6 @@ namespace DayFivePartTwo
                         });
                     } while (xCoord != End.X || yCoord != End.Y);
                     break;
-                default:
-                    break;
             }
 
             return path;
@@ -110,8 +111,8 @@ namespace DayFivePartTwo
 
     public static class Program
     {
-        const int Rows = 1000;
-        const int Columns = 1000;
+        private const int Rows = 1000;
+        private const int Columns = 1000;
 
         public static void Main()
         {
@@ -201,9 +202,9 @@ namespace DayFivePartTwo
         {
             var overlaps = 0;
 
-            for (int x = 0; x < map.GetLength(0); x++)
+            for (var x = 0; x < map.GetLength(0); x++)
             {
-                for (int y = 0; y < map.GetLength(1); y++)
+                for (var y = 0; y < map.GetLength(1); y++)
                 {
                     var currentValue = map[x, y];
 
@@ -222,9 +223,9 @@ namespace DayFivePartTwo
         {
             var mapper = new StringBuilder();
 
-            for (int x = 0; x < map.GetLength(0); x++)
+            for (var x = 0; x < map.GetLength(0); x++)
             {
-                for (int y = 0; y < map.GetLength(1); y++)
+                for (var y = 0; y < map.GetLength(1); y++)
                 {
                     var currentValue = map[x, y];
 

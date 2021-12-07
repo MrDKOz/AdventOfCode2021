@@ -1,36 +1,37 @@
-﻿namespace DayFourPartTwo
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace DayFourPartTwo
 {
     public class AllBoards
     {
-        private readonly List<Board> Boards;
-        private List<Board> WinningBoards = new List<Board>();
+        private readonly List<Board> _boards;
+        private readonly List<Board> _winningBoards = new();
 
-        public AllBoards(List<Board> AllBoards)
+        public AllBoards(List<Board> allBoards)
         {
-            Boards = AllBoards;
+            _boards = allBoards;
         }
 
         public (bool won, int sumOfAllUnmarked, int lastNumber) SearchAndAddMatch(List<int> numbersToMatch)
         {
-            foreach (var board in Boards)
+            foreach (var board in _boards)
             {
                 var result = board.SearchAndAddMatch(numbersToMatch);
 
                 if (result.won)
                 {
-                    if (!WinningBoards.Contains(board))
+                    if (!_winningBoards.Contains(board))
                     {
-                        WinningBoards.Add(board);
+                        _winningBoards.Add(board);
                     }
 
-                    if (WinningBoards.Count == Boards.Count)
+                    if (_winningBoards.Count == _boards.Count)
                     {
                         return result;
                     }
-                }
-                else
-                {
-                    continue;
                 }
             }
 
@@ -40,10 +41,9 @@
 
     public class Board
     {
-        public int[,] Numbers { get; set; } = new int[5, 5];
-        public int[,] Matches { get; set; } = new int[5, 5];
+        private int[,] Numbers { get; } = new int[5, 5];
+        private int[,] Matches { get; } = new int[5, 5];
         private int MatchesCount { get; set; }
-        public bool PotentialWinner => MatchesCount >= 5;
         public int Id { get; set; }
 
         public void AddNumber(int row, int col, int value)
@@ -83,9 +83,9 @@
         {
             var currentSum = 0;
 
-            for (int row = 0; row < 5; row++)
+            for (var row = 0; row < 5; row++)
             {
-                for (int col = 0; col < 5; col++)
+                for (var col = 0; col < 5; col++)
                 {
                     var value = Matches[row, col];
 
@@ -99,14 +99,14 @@
             return currentSum;
         }
 
-        public bool HasWon()
+        private bool HasWon()
         {
             if (MatchesCount < 5)
             {
                 return false;
             }
 
-            for (int row = 0; row < 5; row++)
+            for (var row = 0; row < 5; row++)
             {
                 if (Matches[row, 0] == -1 && Matches[row, 1] == -1 && Matches[row, 2] == -1 && Matches[row, 3] == -1 && Matches[row, 4] == -1)
                 {
@@ -114,7 +114,7 @@
                 }
             }
 
-            for (int col = 0; col < 5; col++)
+            for (var col = 0; col < 5; col++)
             {
                 if (Matches[0, col] == -1 && Matches[1, col] == -1 && Matches[2, col] == -1 && Matches[3, col] == -1 && Matches[4, col] == -1)
                 {
@@ -125,19 +125,19 @@
             return false;
         }
 
-        public void DrawBoard()
+        private void DrawBoard()
         {
             Console.WriteLine($"Drawing board: {Id}");
-            for (int row = 0; row < 5; row++)
+            for (var row = 0; row < 5; row++)
             {
                 Console.WriteLine($"{Numbers[row, 0]} {Numbers[row, 1]} {Numbers[row, 2]} {Numbers[row, 3]} {Numbers[row, 4]}");
             }
         }
 
-        public void DrawMatches()
+        private void DrawMatches()
         {
             Console.WriteLine($"Drawing board: {Id}");
-            for (int row = 0; row < 5; row++)
+            for (var row = 0; row < 5; row++)
             {
                 Console.WriteLine($"{Matches[row, 0]} {Matches[row, 1]} {Matches[row, 2]} {Matches[row, 3]} {Matches[row, 4]}");
             }
@@ -147,7 +147,7 @@
     public class BingoCaller
     {
         private readonly List<int> _numbers;
-        private int timesCalled;
+        private int _timesCalled;
 
         public BingoCaller(List<int> numbers)
         {
@@ -156,9 +156,9 @@
 
         public List<int> Call()
         {
-            var numbersToCall = _numbers.Skip(5 * timesCalled).Take(5).ToList();
+            var numbersToCall = _numbers.Skip(5 * _timesCalled).Take(5).ToList();
 
-            timesCalled++;
+            _timesCalled++;
 
             return numbersToCall;
         }
@@ -166,7 +166,7 @@
 
     public static class Program
     {
-        private static BingoCaller Caller { get; set; }
+        private static BingoCaller Caller { get; set; } = null!;
 
         public static void Main()
         {

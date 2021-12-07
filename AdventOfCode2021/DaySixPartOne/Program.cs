@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace DaySixPartOne
 {
@@ -23,17 +25,9 @@ namespace DaySixPartOne
 
         public void AdvanceDay()
         {
-            var toCreate = 0;
+            var toCreate = Fishes.Count(fish => fish.StepTimer() == Action.Create);
 
-            foreach (var fish in Fishes)
-            {
-                if (fish.StepTimer() == Action.Create)
-                {
-                    toCreate++;
-                }
-            }
-
-            for (int i = 0; i < toCreate; i++)
+            for (var i = 0; i < toCreate; i++)
             {
                 Fishes.Add(new LanternFish(8));
             }
@@ -47,7 +41,7 @@ namespace DaySixPartOne
 
     public class LanternFish
     {
-        public int Timer { get; set; }
+        private int Timer { get; set; }
 
         public LanternFish(int initialTimer)
         {
@@ -58,13 +52,9 @@ namespace DaySixPartOne
         {
             Timer--;
 
-            if (Timer < 0)
-            {
-                Timer = 6;
-                return Action.Create;
-            }
-
-            return Action.Nothing;
+            if (Timer >= 0) return Action.Nothing;
+            Timer = 6;
+            return Action.Create;
         }
     }
 
@@ -77,12 +67,12 @@ namespace DaySixPartOne
             var convertedInput = (from item in splitInput select Convert.ToInt32(item)).ToList();
 
             var family = new Family(convertedInput);
-            var daysToSimulate = 80;
+            const int daysToSimulate = 80;
 
             Console.WriteLine($"Initial state: {family.ReportCurrentState()}");
             Console.WriteLine("Working...");
 
-            for (int day = 1; day <= daysToSimulate; day++)
+            for (var day = 1; day <= daysToSimulate; day++)
             {
                 family.AdvanceDay();
             }
