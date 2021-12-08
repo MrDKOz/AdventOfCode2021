@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace DayEightPartOne
+﻿namespace DayEightPartOne
 {
     public static class Program
     {
@@ -40,6 +36,5 @@ namespace DayEightPartOne
                     split[1].Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList()
                 ));
         }
-
     }
 }

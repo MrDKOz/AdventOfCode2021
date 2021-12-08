@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Text;
 
 namespace DayFivePartOne
@@ -177,9 +174,9 @@ namespace DayFivePartOne
         {
             var overlaps = 0;
 
-            for (int x = 0; x < map.GetLength(0); x++)
+            for (var x = 0; x < map.GetLength(0); x++)
             {
-                for (int y = 0; y < map.GetLength(1); y++)
+                for (var y = 0; y < map.GetLength(1); y++)
                 {
                     var currentValue = map[x, y];
 
@@ -198,9 +195,9 @@ namespace DayFivePartOne
         {
             var mapper = new StringBuilder();
 
-            for (int x = 0; x < map.GetLength(0); x++)
+            for (var x = 0; x < map.GetLength(0); x++)
             {
-                for (int y = 0; y < map.GetLength(1); y++)
+                for (var y = 0; y < map.GetLength(1); y++)
                 {
                     var currentValue = map[x, y];
 
