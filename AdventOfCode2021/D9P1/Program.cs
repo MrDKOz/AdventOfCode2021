@@ -7,7 +7,7 @@
             private static int[,] Map { get; set; } = null!;
             private static int Rows => Map.GetLength(0);
             private static int Cols => Map.GetLength(1);
-            public int RiskLevel { get; set; }
+            public int RiskLevel { get; private set; }
 
             public HeightMap(IReadOnlyList<string> input)
             {
