@@ -1,32 +1,31 @@
-﻿namespace D1P1
+﻿namespace D1P1;
+
+public static class Program
 {
-    public static class Program
+    public static void Main()
     {
-        public static void Main()
+        var inputs = System.IO.File.ReadAllLines("input.txt");
+        var depthIncreaseCount = 0;
+        var previousValue = 0;
+        var firstValueDone = false;
+
+        foreach (var recordedDepth in inputs)
         {
-            var inputs = System.IO.File.ReadAllLines("input.txt");
-            var depthIncreaseCount = 0;
-            var previousValue = 0;
-            var firstValueDone = false;
-
-            foreach (var recordedDepth in inputs)
+            if (int.TryParse(recordedDepth, out var value))
             {
-                if (int.TryParse(recordedDepth, out var value))
+                if (firstValueDone)
                 {
-                    if (firstValueDone)
-                    {
-                        depthIncreaseCount += value > previousValue ? 1 : 0;
-                    }
-                    else
-                    {
-                        firstValueDone = true;
-                    }
-
-                    previousValue = value;
+                    depthIncreaseCount += value > previousValue ? 1 : 0;
                 }
-            }
+                else
+                {
+                    firstValueDone = true;
+                }
 
-            Console.WriteLine($"Depth increased: {depthIncreaseCount} time(s)");
+                previousValue = value;
+            }
         }
+
+        Console.WriteLine($"Depth increased: {depthIncreaseCount} time(s)");
     }
 }

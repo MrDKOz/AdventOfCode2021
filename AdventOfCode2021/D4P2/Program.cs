@@ -1,258 +1,257 @@
-﻿namespace DayFourPartTwo
+﻿namespace DayFourPartTwo;
+
+public class AllBoards
 {
-    public class AllBoards
+    private readonly List<Board> _boards;
+    private readonly List<Board> _winningBoards = new();
+
+    public AllBoards(List<Board> allBoards)
     {
-        private readonly List<Board> _boards;
-        private readonly List<Board> _winningBoards = new();
-
-        public AllBoards(List<Board> allBoards)
-        {
-            _boards = allBoards;
-        }
-
-        public (bool won, int sumOfAllUnmarked, int lastNumber) SearchAndAddMatch(List<int> numbersToMatch)
-        {
-            foreach (var board in _boards)
-            {
-                var result = board.SearchAndAddMatch(numbersToMatch);
-
-                if (result.won)
-                {
-                    if (!_winningBoards.Contains(board))
-                    {
-                        _winningBoards.Add(board);
-                    }
-
-                    if (_winningBoards.Count == _boards.Count)
-                    {
-                        return result;
-                    }
-                }
-            }
-
-            return (false, -1, -1);
-        }
+        _boards = allBoards;
     }
 
-    public class Board
+    public (bool won, int sumOfAllUnmarked, int lastNumber) SearchAndAddMatch(List<int> numbersToMatch)
     {
-        private int[,] Numbers { get; } = new int[5, 5];
-        private int[,] Matches { get; } = new int[5, 5];
-        private int MatchesCount { get; set; }
-        public int Id { get; set; }
-
-        public void AddNumber(int row, int col, int value)
+        foreach (var board in _boards)
         {
-            Numbers[row, col] = value;
+            var result = board.SearchAndAddMatch(numbersToMatch);
+
+            if (result.won)
+            {
+                if (!_winningBoards.Contains(board))
+                {
+                    _winningBoards.Add(board);
+                }
+
+                if (_winningBoards.Count == _boards.Count)
+                {
+                    return result;
+                }
+            }
         }
 
-        public (bool won, int sumOfAllUnmarked, int lastNumber) SearchAndAddMatch(List<int> numbersToMatch)
+        return (false, -1, -1);
+    }
+}
+
+public class Board
+{
+    private int[,] Numbers { get; } = new int[5, 5];
+    private int[,] Matches { get; } = new int[5, 5];
+    private int MatchesCount { get; set; }
+    public int Id { get; set; }
+
+    public void AddNumber(int row, int col, int value)
+    {
+        Numbers[row, col] = value;
+    }
+
+    public (bool won, int sumOfAllUnmarked, int lastNumber) SearchAndAddMatch(List<int> numbersToMatch)
+    {
+        foreach (var number in numbersToMatch)
         {
-            foreach (var number in numbersToMatch)
+            for (var col = 0; col < 5; col++)
             {
-                for (var col = 0; col < 5; col++)
+                for (var row = 0; row < 5; row++)
                 {
-                    for (var row = 0; row < 5; row++)
+                    if (Numbers[col, row] == number)
                     {
-                        if (Numbers[col, row] == number)
+                        Matches[col, row] = -1;
+                        MatchesCount++;
+
+                        if (HasWon())
                         {
-                            Matches[col, row] = -1;
-                            MatchesCount++;
+                            DrawBoard();
+                            DrawMatches();
 
-                            if (HasWon())
-                            {
-                                DrawBoard();
-                                DrawMatches();
-
-                                return (true, SumAllUnmarked(), number);
-                            }
+                            return (true, SumAllUnmarked(), number);
                         }
                     }
                 }
             }
-
-            return (false, -1, -1);
         }
 
-        private int SumAllUnmarked()
+        return (false, -1, -1);
+    }
+
+    private int SumAllUnmarked()
+    {
+        var currentSum = 0;
+
+        for (var row = 0; row < 5; row++)
         {
-            var currentSum = 0;
-
-            for (var row = 0; row < 5; row++)
-            {
-                for (var col = 0; col < 5; col++)
-                {
-                    var value = Matches[row, col];
-
-                    if (value == 0)
-                    {
-                        currentSum += Numbers[row, col];
-                    }
-                }
-            }
-
-            return currentSum;
-        }
-
-        private bool HasWon()
-        {
-            if (MatchesCount < 5)
-            {
-                return false;
-            }
-
-            for (var row = 0; row < 5; row++)
-            {
-                if (Matches[row, 0] == -1 && Matches[row, 1] == -1 && Matches[row, 2] == -1 && Matches[row, 3] == -1 && Matches[row, 4] == -1)
-                {
-                    return true;
-                }
-            }
-
             for (var col = 0; col < 5; col++)
             {
-                if (Matches[0, col] == -1 && Matches[1, col] == -1 && Matches[2, col] == -1 && Matches[3, col] == -1 && Matches[4, col] == -1)
+                var value = Matches[row, col];
+
+                if (value == 0)
                 {
-                    return true;
+                    currentSum += Numbers[row, col];
                 }
             }
+        }
 
+        return currentSum;
+    }
+
+    private bool HasWon()
+    {
+        if (MatchesCount < 5)
+        {
             return false;
         }
 
-        private void DrawBoard()
+        for (var row = 0; row < 5; row++)
         {
-            Console.WriteLine($"Drawing board: {Id}");
-            for (var row = 0; row < 5; row++)
+            if (Matches[row, 0] == -1 && Matches[row, 1] == -1 && Matches[row, 2] == -1 && Matches[row, 3] == -1 && Matches[row, 4] == -1)
             {
-                Console.WriteLine($"{Numbers[row, 0]} {Numbers[row, 1]} {Numbers[row, 2]} {Numbers[row, 3]} {Numbers[row, 4]}");
+                return true;
             }
         }
 
-        private void DrawMatches()
+        for (var col = 0; col < 5; col++)
         {
-            Console.WriteLine($"Drawing board: {Id}");
-            for (var row = 0; row < 5; row++)
+            if (Matches[0, col] == -1 && Matches[1, col] == -1 && Matches[2, col] == -1 && Matches[3, col] == -1 && Matches[4, col] == -1)
             {
-                Console.WriteLine($"{Matches[row, 0]} {Matches[row, 1]} {Matches[row, 2]} {Matches[row, 3]} {Matches[row, 4]}");
+                return true;
             }
+        }
+
+        return false;
+    }
+
+    private void DrawBoard()
+    {
+        Console.WriteLine($"Drawing board: {Id}");
+        for (var row = 0; row < 5; row++)
+        {
+            Console.WriteLine($"{Numbers[row, 0]} {Numbers[row, 1]} {Numbers[row, 2]} {Numbers[row, 3]} {Numbers[row, 4]}");
         }
     }
 
-    public class BingoCaller
+    private void DrawMatches()
     {
-        private readonly List<int> _numbers;
-        private int _timesCalled;
-
-        public BingoCaller(List<int> numbers)
+        Console.WriteLine($"Drawing board: {Id}");
+        for (var row = 0; row < 5; row++)
         {
-            _numbers = numbers;
+            Console.WriteLine($"{Matches[row, 0]} {Matches[row, 1]} {Matches[row, 2]} {Matches[row, 3]} {Matches[row, 4]}");
         }
+    }
+}
 
-        public List<int> Call()
+public class BingoCaller
+{
+    private readonly List<int> _numbers;
+    private int _timesCalled;
+
+    public BingoCaller(List<int> numbers)
+    {
+        _numbers = numbers;
+    }
+
+    public List<int> Call()
+    {
+        var numbersToCall = _numbers.Skip(5 * _timesCalled).Take(5).ToList();
+
+        _timesCalled++;
+
+        return numbersToCall;
+    }
+}
+
+public static class Program
+{
+    private static BingoCaller Caller { get; set; } = null!;
+
+    public static void Main()
+    {
+        var boards = File.ReadAllLines("boards.txt");
+        var numbers = File.ReadAllLines("numbers.txt");
+
+        var convertedBoards = ConvertBoardsFromRaw(boards);
+        var convertedNumbers = ConvertNumbersFromRaw(numbers);
+
+        Caller = new BingoCaller(convertedNumbers);
+
+        PlayBingo(new AllBoards(convertedBoards));
+
+        Console.WriteLine($"Game Over! Thank you for playing.");
+    }
+
+    private static void PlayBingo(AllBoards boards)
+    {
+        var foundAWinner = false;
+        var roundCounter = 1;
+
+        while (!foundAWinner)
         {
-            var numbersToCall = _numbers.Skip(5 * _timesCalled).Take(5).ToList();
+            var numbersForRound = Caller.Call();
 
-            _timesCalled++;
+            Console.WriteLine($"[Bingo Caller] Numbers for round #{roundCounter} are {string.Join(", ", numbersForRound)}!");
 
-            return numbersToCall;
+            var (won, sumOfAllUnmarked, lastNumber) = boards.SearchAndAddMatch(numbersForRound);
+
+            if (won)
+            {
+                Console.WriteLine("[Bingo Caller] We have a winner!");
+                Console.WriteLine($"Unmarked Sum: {sumOfAllUnmarked} | Last Number: {lastNumber}");
+                Console.WriteLine($"Answer: {sumOfAllUnmarked * lastNumber}");
+            }
+            else
+            {
+                Console.WriteLine($"[Bingo Caller] Onto round #{++roundCounter}!");
+            }
+
+            foundAWinner = won;
         }
     }
 
-    public static class Program
+    private static List<int> ConvertNumbersFromRaw(IEnumerable<string> rawNumbers)
     {
-        private static BingoCaller Caller { get; set; } = null!;
+        var numbers = new List<int>();
 
-        public static void Main()
+        var tempLine = rawNumbers.First().Split(',');
+
+        numbers.AddRange(from number in tempLine
+            select Convert.ToInt32(number));
+
+        return numbers;
+    }
+
+    private static List<Board> ConvertBoardsFromRaw(IEnumerable<string> rawBoards)
+    {
+        var boards = new List<Board>();
+        var tempBoard = new Board();
+
+        var row = 0;
+        var boardId = 0;
+
+        foreach (var line in rawBoards)
         {
-            var boards = File.ReadAllLines("boards.txt");
-            var numbers = File.ReadAllLines("numbers.txt");
-
-            var convertedBoards = ConvertBoardsFromRaw(boards);
-            var convertedNumbers = ConvertNumbersFromRaw(numbers);
-
-            Caller = new BingoCaller(convertedNumbers);
-
-            PlayBingo(new AllBoards(convertedBoards));
-
-            Console.WriteLine($"Game Over! Thank you for playing.");
-        }
-
-        private static void PlayBingo(AllBoards boards)
-        {
-            var foundAWinner = false;
-            var roundCounter = 1;
-
-            while (!foundAWinner)
+            if (!string.IsNullOrEmpty(line))
             {
-                var numbersForRound = Caller.Call();
+                var numbers = line.Replace("  ", " ").Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                Console.WriteLine($"[Bingo Caller] Numbers for round #{roundCounter} are {string.Join(", ", numbersForRound)}!");
-
-                var (won, sumOfAllUnmarked, lastNumber) = boards.SearchAndAddMatch(numbersForRound);
-
-                if (won)
+                for (int col = 0; col < 5; col++)
                 {
-                    Console.WriteLine("[Bingo Caller] We have a winner!");
-                    Console.WriteLine($"Unmarked Sum: {sumOfAllUnmarked} | Last Number: {lastNumber}");
-                    Console.WriteLine($"Answer: {sumOfAllUnmarked * lastNumber}");
-                }
-                else
-                {
-                    Console.WriteLine($"[Bingo Caller] Onto round #{++roundCounter}!");
+                    tempBoard.AddNumber(row, col, Convert.ToInt32(numbers[col]));
                 }
 
-                foundAWinner = won;
+                row++;
+            }
+            else
+            {
+                tempBoard.Id = boardId;
+                boards.Add(tempBoard);
+                tempBoard = new Board();
+
+                row = 0;
+                boardId++;
             }
         }
 
-        private static List<int> ConvertNumbersFromRaw(IEnumerable<string> rawNumbers)
-        {
-            var numbers = new List<int>();
+        boards.Add(tempBoard);
 
-            var tempLine = rawNumbers.First().Split(',');
-
-            numbers.AddRange(from number in tempLine
-                             select Convert.ToInt32(number));
-
-            return numbers;
-        }
-
-        private static List<Board> ConvertBoardsFromRaw(IEnumerable<string> rawBoards)
-        {
-            var boards = new List<Board>();
-            var tempBoard = new Board();
-
-            var row = 0;
-            var boardId = 0;
-
-            foreach (var line in rawBoards)
-            {
-                if (!string.IsNullOrEmpty(line))
-                {
-                    var numbers = line.Replace("  ", " ").Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-                    for (int col = 0; col < 5; col++)
-                    {
-                        tempBoard.AddNumber(row, col, Convert.ToInt32(numbers[col]));
-                    }
-
-                    row++;
-                }
-                else
-                {
-                    tempBoard.Id = boardId;
-                    boards.Add(tempBoard);
-                    tempBoard = new Board();
-
-                    row = 0;
-                    boardId++;
-                }
-            }
-
-            boards.Add(tempBoard);
-
-            return boards;
-        }
+        return boards;
     }
 }
