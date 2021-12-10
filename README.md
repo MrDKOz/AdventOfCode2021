@@ -15,6 +15,6 @@ Some of these may not be the cleanest solutions, but they work, it's good fun, a
 - [Day Seven](https://adventofcode.com/2021/day/7) : [Part One](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D7P1) | [Part Two](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D7P2)
 - [Day Eight](https://adventofcode.com/2021/day/8) : [Part One](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D8P1) | [Part Two](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D8P2)
 - [Day Nine](https://adventofcode.com/2021/day/9) : [Part One](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D9P1) | [Part Two](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D9P2)
-- [Day Ten](https://adventofcode.com/2021/day/10) : [Part One](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D10P1) | Part Two - WIP
+- [Day Ten](https://adventofcode.com/2021/day/10) : [Part One](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D10P1) | [Part Two](https://github.com/MrDKOz/AdventOfCode2021/tree/main/AdventOfCode2021/D10P2)
 
 GL;HF!
